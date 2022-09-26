@@ -1,15 +1,22 @@
-import React, { useContext } from 'react';
-import AuthContext from './store/auth-context';
-import AuthForm from './Components/Authentication/authForm';
+import React from "react";
 
+import { Switch, Route } from "react-router-dom";
+
+import AuthForm from "./Components/Authentication/authForm";
+import Welcome from "./Components/Welcome/Welcome";
 
 function App() {
-  const authCtx = useContext (AuthContext)
-
   return (
     <main>
-      <AuthForm />
+      <Switch>
+        <Route path="/" exact>
+          <AuthForm />
+        </Route>
 
+        <Route path="/welcome">
+          <Welcome />
+        </Route>
+      </Switch>
     </main>
   );
 }

@@ -1,13 +1,13 @@
 import { useState, useRef, useContext } from "react";
 
-//import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import classes from "./AuthForm.module.css";
 import AuthContext from "../../store/auth-context";
 
 const AuthForm = () => {
 
-  //const history = useHistory();
+  const history = useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
@@ -23,17 +23,14 @@ const AuthForm = () => {
 
   const SubmitHandler = (event) => {
     event.preventDefault();
-
+    
     const enteredEmail = emailInputRef.current.value;
     const eneteredPassword = passwordInputRef.current.value;
-    const confirmPassword = confirmPasswordInputRef.current.value;
+   /* const confirmPassword = confirmPasswordInputRef.current.value;
 
     if(eneteredPassword != confirmPassword){
       alert("Passwords did not match")
-    }
-
-    localStorage.setItem('email', enteredEmail)
-
+    }*/
     setIsLoading(true);
     let url;
 
@@ -74,7 +71,7 @@ const AuthForm = () => {
       .then((data) => {
         authCtx.login(data.idToken);
         console.log("User has successfully logged in")
-        //history.replace('/store');
+        history.replace('/welcome');
       })
       .catch((err) => {
         alert(err.message);
@@ -99,26 +96,27 @@ const AuthForm = () => {
             ref={passwordInputRef}
           />
         </div>
-        <div className={classes.control}>
+        {!isLogin && (<div className={classes.control}>
           <label htmlFor="password">Confirm Password</label>
           <input
             type="password"
             id="confirmPassword"
-            required
+            
             ref={confirmPasswordInputRef}
           />
         </div>
+        )}
         <div className={classes.actions}>
           {!isLoading && (
             <button>{isLogin ? "Login" : "Create Account"}</button>
           )}
-          {isLoading && <p> Sending request ....</p>}
+          {isLogin && <button>Forgot password</button>}
           <button
             type="button"
             className={classes.toggle}
             onClick={switchAuthModeHandler}
           >
-            {isLogin ? "Create new account" : "Have an account? Login"}
+            {isLogin ? "Don't have an account? Sign up!" : "Have an account? Login"}
           </button>
         </div>
       </form>

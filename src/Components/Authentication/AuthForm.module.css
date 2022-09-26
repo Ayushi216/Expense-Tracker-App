@@ -19,6 +19,10 @@
   margin-bottom: 0.5rem;
 }
 
+.butt {
+  color: pink;
+}
+
 .control label {
   display: block;
   color: black;
