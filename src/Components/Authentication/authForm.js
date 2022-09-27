@@ -21,6 +21,10 @@ const AuthForm = () => {
     setIsLogin((prevState) => !prevState);
   };
 
+  const passwordHandler = (props) => {
+    history.replace('/passwdreset')
+  }
+
   const SubmitHandler = (event) => {
     event.preventDefault();
     
@@ -110,7 +114,12 @@ const AuthForm = () => {
           {!isLoading && (
             <button>{isLogin ? "Login" : "Create Account"}</button>
           )}
-          {isLogin && <button>Forgot password</button>}
+        </div>
+
+        
+
+        <div className={classes.actions}>
+          
           <button
             type="button"
             className={classes.toggle}
@@ -119,7 +128,10 @@ const AuthForm = () => {
             {isLogin ? "Don't have an account? Sign up!" : "Have an account? Login"}
           </button>
         </div>
+
+
       </form>
+      {isLogin && <button className={classes.passwordbutton} onClick={passwordHandler}>Forgot password?</button>}
     </section>
   );
 };
