@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import AuthForm from "./Components/Authentication/authForm";
 import Welcome from "./Components/Welcome/Welcome";
 import Profile from "./Components/Profile/profile";
+import Reset from "./Components/PasswordReset/Reset";
 
 
 function App() {
@@ -24,6 +25,10 @@ function App() {
 
         <Route path="/profile">
           <Profile />
+        </Route>
+
+        <Route path="/passwdreset">
+          <Reset />
         </Route>
 
       </Switch>

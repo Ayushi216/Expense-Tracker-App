@@ -74,5 +74,15 @@
 
 .actions .toggle:hover {
   background-color: transparent;
-  color: yellow;
+  color: blue;
+}
+
+.passwordbutton {
+  
+  border: none;
+}
+
+.passwordbutton .toggle:hover {
+  background-color: transparent;
+  color: blue;
 }
