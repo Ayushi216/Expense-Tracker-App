@@ -29,3 +29,14 @@
     box-shadow: black;
     border-style: double;
 }
+
+.verify {
+    display: flex;
+    float: right;
+}
+
+.verifybutton {
+    color: purple;
+    background-color: transparent;
+    border: none;
+}
