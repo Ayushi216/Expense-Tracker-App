@@ -1,5 +1,6 @@
 import React, { Fragment, useRef, useContext } from "react";
-import {stringify} from 'flatted';
+import { useHistory } from "react-router-dom";
+import { stringify } from "flatted";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./profile.module.css";
@@ -7,9 +8,13 @@ import classes from "./profile.module.css";
 const Profile = () => {
   const nameInputRef = useRef();
   const urlInputRef = useRef();
-  const authCtx = useContext(AuthContext)
 
-  fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCm1BvBfb655cubTMVdda30otMpIuOclhk', {
+  const history = useHistory();
+  const authCtx = useContext(AuthContext);
+
+  fetch(
+    "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCm1BvBfb655cubTMVdda30otMpIuOclhk",
+    {
       method: "POST",
       body: JSON.stringify({
         idToken: authCtx.token,
@@ -17,29 +22,33 @@ const Profile = () => {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            let errorMessage = "Data could not be fetched";
-            /*if (data && data.error && data.error.message) {
+    }
+  )
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return res.json().then((data) => {
+          let errorMessage = "Data could not be fetched";
+          /*if (data && data.error && data.error.message) {
               errorMessage = data.error.message;
             }*/
 
-            throw new Error(errorMessage);
-          });
-        }
-      })
-      .then((data) => {
-        console.log("Profile details shown")
-        console.log(data.users)
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-      
+          throw new Error(errorMessage);
+        });
+      }
+    })
+    .then((data) => {
+      console.log("Profile details shown");
+      console.log(data.users);
+    })
+    .catch((err) => {
+      alert(err.message);
+    });
+
+  const mainPageHandler = () => {
+    history.replace("/welcome");
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -48,18 +57,21 @@ const Profile = () => {
     const enteredUrl = urlInputRef.current.value;
     console.log(enteredName, enteredUrl);
 
-    fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCm1BvBfb655cubTMVdda30otMpIuOclhk', {
-      method: "POST",
-      body: stringify({
-        idToken: authCtx.token,
-        emaildisplayName: nameInputRef,
-        photoUrl: urlInputRef,
-        returnSecureToken: true,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCm1BvBfb655cubTMVdda30otMpIuOclhk",
+      {
+        method: "POST",
+        body: stringify({
+          idToken: authCtx.token,
+          emaildisplayName: nameInputRef,
+          photoUrl: urlInputRef,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -75,13 +87,12 @@ const Profile = () => {
         }
       })
       .then((data) => {
-        alert("Profile has been updated")
-        console.log("Profile updated succesfully")
+        alert("Profile has been updated");
+        console.log("Profile updated succesfully");
       })
       .catch((err) => {
         alert(err.message);
       });
-      
   };
 
   return (
@@ -89,6 +100,7 @@ const Profile = () => {
       <section>
         <h1 className={classes.h1}> Update your profile </h1>
       </section>
+      <button onClick={mainPageHandler}> Go to main page </button>
       <section>
         <h2 className={classes.h2}> Contact Details </h2>
         <form onSubmit={submitHandler}>
