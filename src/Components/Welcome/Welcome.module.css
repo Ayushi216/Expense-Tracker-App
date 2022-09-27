@@ -9,7 +9,7 @@
 }
 
 .p {
-    padding-left: 950px;
+    padding-left: 800px;
     font-style: italic;
     font-size: small;
 }
@@ -19,4 +19,13 @@
     border: none;
     font-style: italic;
     background-color: white;
+}
+
+.logout {
+    padding: 0px;
+    margin-left: 100px;
+    background-color: rgb(223, 134, 134);
+    width: 100px;
+    box-shadow: black;
+    border-style: double;
 }

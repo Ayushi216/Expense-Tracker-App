@@ -15,6 +15,9 @@ function App() {
           <AuthForm />
         </Route>
 
+        <Route path="/auth">
+          <AuthForm />
+        </Route>
         <Route path="/welcome">
           <Welcome />
         </Route>
