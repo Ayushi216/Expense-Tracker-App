@@ -6,9 +6,13 @@ import AuthForm from "./Components/Authentication/authForm";
 import Welcome from "./Components/Welcome/Welcome";
 import Profile from "./Components/Profile/profile";
 import Reset from "./Components/PasswordReset/Reset";
+import Expenses from "./Components/Expenses/Expenses";
+//import AuthContext from "./store/auth-context";
 
 
 function App() {
+  //const authCtx = useContext(AuthContext);
+
   return (
     <main>
       <Switch>
@@ -31,9 +35,14 @@ function App() {
           <Reset />
         </Route>
 
+      <Route path="/expenses">
+          <Expenses />
+        </Route>
+        
       </Switch>
       
     </main>
+    
   );
 }
 
