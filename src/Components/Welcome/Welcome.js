@@ -17,6 +17,10 @@ const Welcome = (props) => {
       history.replace("/auth");
     };
 
+    const expensesHandler = () => {
+      history.replace('/expenses')
+    }
+
     const verifyHandler = (props) => {
       fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCm1BvBfb655cubTMVdda30otMpIuOclhk",
@@ -66,6 +70,12 @@ const Welcome = (props) => {
         <p> Verify your email now!</p>
         <button className={classes.verifybutton}  onClick={verifyHandler}> Click here!</button>
       </section>
+      <section className={classes.expenses}>
+        <h1> Day to day expenses</h1>
+        
+        <img src='expenses.jpg' alt='expenses' className={classes.img}></img>
+      </section>
+      <button className={classes.buttone} onClick={expensesHandler}> Track your expenses now</button>
     </Fragment>
   );
 };
