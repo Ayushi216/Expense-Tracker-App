@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Switch, Route } from "react-router-dom";
 
@@ -7,14 +7,56 @@ import Welcome from "./Components/Welcome/Welcome";
 import Profile from "./Components/Profile/profile";
 import Reset from "./Components/PasswordReset/Reset";
 import Expenses from "./Components/Expenses/Expenses";
-//import AuthContext from "./store/auth-context";
+import { useDispatch, useSelector } from "react-redux";
 
+import { expenseActions } from "./store/expense-slice";
 
 function App() {
-  //const authCtx = useContext(AuthContext);
+   if(!localStorage.getItem('email')){
+    localStorage.setItem("email","")
+   }
+ 
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme.darkMode);
+ //const email = useSelector((state) => state.expense.email);
+ // console.log(email)
+  let email = localStorage.getItem("email").replace(".", "").replace("@", "");
+
+  /*useEffect(() => {
+     
+    localStorage.setItem("email","")
+  },[email])*/
+
+  
+  useEffect(() => {
+    fetch(
+      `https://expense-tracker-acd04-default-rtdb.firebaseio.com/${email}.json`,
+      {
+        method: "GET",
+      }
+    )
+      .then(async (res) => {
+        const data = await res.json();
+        console.log("In app js" , data)
+        for (const key in data) {
+          const item = data[key];
+          item.id = key;
+          dispatch(expenseActions.addExpense(item));
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, [dispatch]);
 
   return (
-    <main>
+    <main
+      style={
+        theme
+          ? { backgroundColor: "black", color: "red" }
+          : { backgroundColor: "white" }
+      }
+    >
       <Switch>
         <Route path="/" exact>
           <AuthForm />
@@ -35,14 +77,11 @@ function App() {
           <Reset />
         </Route>
 
-      <Route path="/expenses">
+        <Route path="/expenses">
           <Expenses />
         </Route>
-        
       </Switch>
-      
     </main>
-    
   );
 }
 

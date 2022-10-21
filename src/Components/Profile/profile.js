@@ -11,13 +11,16 @@ const Profile = () => {
 
   const history = useHistory();
   const authCtx = useContext(AuthContext);
+  console.log("token", authCtx.token)
+  const token = localStorage.getItem("token");
+  console.log("In local storage", token)
 
   fetch(
     "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCm1BvBfb655cubTMVdda30otMpIuOclhk",
     {
       method: "POST",
       body: JSON.stringify({
-        idToken: authCtx.token,
+        idToken: token,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -57,14 +60,16 @@ const Profile = () => {
     const enteredUrl = urlInputRef.current.value;
     console.log(enteredName, enteredUrl);
 
+    console.log(authCtx.token)
+
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCm1BvBfb655cubTMVdda30otMpIuOclhk",
       {
         method: "POST",
         body: stringify({
-          idToken: authCtx.token,
-          emaildisplayName: nameInputRef,
-          photoUrl: urlInputRef,
+          idToken: token,
+          emaildisplayName: enteredName,
+          photoUrl: enteredUrl,
           returnSecureToken: true,
         }),
         headers: {

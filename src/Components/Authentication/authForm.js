@@ -1,18 +1,23 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef } from "react";
+
+import { useDispatch } from "react-redux";
 
 import { useHistory } from 'react-router-dom';
 
 import classes from "./AuthForm.module.css";
-import AuthContext from "../../store/auth-context";
+
+import { authActions } from "../../store/auth-redux";
+import { expenseActions } from "../../store/expense-slice";
 
 const AuthForm = () => {
 
+  const dispatch = useDispatch();
+
   const history = useHistory();
+  
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
-
-  const authCtx = useContext(AuthContext);
 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +33,7 @@ const AuthForm = () => {
   const SubmitHandler = (event) => {
     event.preventDefault();
     
+    
     const enteredEmail = emailInputRef.current.value;
     const eneteredPassword = passwordInputRef.current.value;
    /* const confirmPassword = confirmPasswordInputRef.current.value;
@@ -35,6 +41,8 @@ const AuthForm = () => {
     if(eneteredPassword != confirmPassword){
       alert("Passwords did not match")
     }*/
+
+    
     setIsLoading(true);
     let url;
 
@@ -73,7 +81,11 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        authCtx.login(data.idToken);
+        
+        dispatch(authActions.login(data.idToken));
+        localStorage.setItem("email", enteredEmail);
+        let email = localStorage.getItem("email").replace(".", "").replace("@", "");
+        dispatch(expenseActions.setEmail(email));
         console.log("User has successfully logged in")
         history.replace('/welcome');
       })
