@@ -12,6 +12,8 @@ const Welcome = (props) => {
   const history = useHistory();
   const token = localStorage.getItem("token");
 
+ 
+
   const onClickHandler = (props) => {
     history.replace("/profile");
   };
@@ -21,6 +23,7 @@ const Welcome = (props) => {
     console.log("Logged out successfully");
     dispatch(expenseActions.removeEmail());
     history.replace("/auth");
+   
   };
 
   const expensesHandler = () => {
@@ -81,7 +84,7 @@ const Welcome = (props) => {
       <section className={classes.verify}>
         <p> Verify your email now!</p>
         <button className={classes.verifybutton} onClick={verifyHandler}>
-          {" "}
+
           Click here!
         </button>
       </section>
@@ -91,7 +94,6 @@ const Welcome = (props) => {
         <img src="expenses.jpg" alt="expenses" className={classes.img}></img>
       </section>
       <button className={classes.buttone} onClick={expensesHandler}>
-        {" "}
         Track your expenses now
       </button>
     </Fragment>
