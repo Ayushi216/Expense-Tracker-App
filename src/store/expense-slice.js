@@ -6,7 +6,8 @@ const expenseSlice = createSlice({
     expenses: [],
     totalAmount: 0,
     premium: false,
-    email: "",
+    email:
+      localStorage.getItem("email")?.replace(".", "")?.replace("@", "") || ""
   },
   reducers: {
     addExpense(state, action) {
@@ -17,7 +18,7 @@ const expenseSlice = createSlice({
         id: newExpense.id,
         amount: newExpense.amount,
         description: newExpense.description,
-        category: newExpense.category,
+        category: newExpense.category
       });
 
       state.totalAmount = Number(state.totalAmount) + Number(newExpense.amount);
@@ -36,15 +37,15 @@ const expenseSlice = createSlice({
     },
 
     setEmail(state, action) {
-      console.log(action)
+      console.log(action);
       state.email = action.payload;
       console.log(state.email);
     },
 
     removeEmail(state) {
       state.email = "";
-    },
-  },
+    }
+  }
 });
 
 export const expenseActions = expenseSlice.actions;

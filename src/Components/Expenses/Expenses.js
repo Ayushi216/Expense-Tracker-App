@@ -46,7 +46,7 @@ const Expenses = (props) => {
   }, [allExpenses]);
 
   const onClick = () => {
-    console.log("Clicked");
+    
     if (darkMode) {
       dispatch(themeActions.changeTheme("LIGHTMODE"));
     } else dispatch(themeActions.changeTheme("DARKMODE"));
@@ -181,7 +181,7 @@ const Expenses = (props) => {
 
       {premium && !prem && (
         <button className={classes.premium} onClick={premiumHandler}>
-          Activate premium{" "}
+          Activate premium
         </button>
       )}
 
